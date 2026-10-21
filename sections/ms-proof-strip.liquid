@@ -1,0 +1,69 @@
+{% comment %}
+  MARCELINE ASSESSMENT STARTER
+  This code is intentionally incomplete. Repair it while preserving merchant settings.
+{% endcomment %}
+
+<section class="ms-proof-strip" aria-label="{{ section.settings.title }}">
+  <div class="ms-proof-strip__inner">
+    <h2>{{ section.settings.title }}</h2>
+    <div class="ms-proof-strip__grid">
+      {% for block in section.blocks %}
+        <article class="ms-proof-strip__card">
+          <h3>{{ block.settings.label }}</h3>
+          {% if block.settings.description !=blank %}
+          <p>{{ block.settings.description }}</p>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+    {% if section.settings.show_cta and section.settings.cta_url != blank and section.settings.cta_label !=blank %}
+      <a class="ms-proof-strip__button" href="{{ section.settings.cta_url }}">
+        {{ section.settings.cta_label }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .ms-proof-strip { padding: 36px 16px; background: #f9f6f3; }
+  .ms-proof-strip__inner { max-width: 1080px; margin: 0 auto; }
+  .ms-proof-strip__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .ms-proof-strip__card { background: white; border-radius: 8px; padding: 18px; }
+  .ms-proof-strip__button { display: inline-block; margin-top: 20px; }
+
+  {% comment %} Mobile responsive relates styles here {% endcomment %}
+  @media (max-width: 767px){
+    .ms-proof-strip__grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 18px; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Marceline proof strip",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Section title", "default": "Why customers choose us" },
+    { "type": "checkbox", "id": "show_cta", "label": "Show CTA", "default": true },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Learn more" },
+    { "type": "url", "id": "cta_url", "label": "CTA URL" }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Benefit heading", "default": "Expert support" },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Benefit description",
+          "default": "Professional guidance at each step."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Marceline proof strip", "blocks": [{ "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }] }
+  ]
+}
+{% endschema %}
